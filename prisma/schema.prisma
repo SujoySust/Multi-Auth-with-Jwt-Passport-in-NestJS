@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+  // previewFeatures = ["interactiveTransactions"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         BigInt      @id @default(autoincrement())
+  usercode   String      @unique @db.VarChar(100)
+  name       String?     @db.VarChar(255)
+  email      String?     @unique()
+  password   String?     @db.VarChar(255)
+  status     Int         @default(0) @db.SmallInt
+  created_at DateTime    @default(now())
+  updated_at DateTime?   @updatedAt
+
+  @@map("users")
+}
+
+model Staff {
+  id         BigInt      @id @default(autoincrement())
+  name       String?     @db.VarChar(255)
+  email      String?     @unique()
+  password   String?     @db.VarChar(255)
+  status     Int         @default(0) @db.SmallInt
+  created_at DateTime    @default(now())
+  updated_at DateTime?   @updatedAt
+
+  @@map("staff")
+}
+
+//** Testings **//
+
+// model TestDb {
+//   id              BigInt    @id @default(autoincrement())
+//   // user_id         BigInt    @unique
+//   balance         Decimal   @db.Decimal(29,18)
+//   created_at      DateTime  @default(now())
+//   updated_at      DateTime? @updatedAt
+
+//   @@map("test_db")
+// }
